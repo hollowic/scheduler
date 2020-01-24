@@ -3,11 +3,13 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.19.1",
     "classnames": "^2.2.6",
     "normalize.css": "^8.0.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
-    "react-scripts": "3.0.0"
+    "react-scripts": "^3.3.0",
+    "react-test-renderer": "^16.12.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -38,13 +40,16 @@
     "@storybook/react": "^5.0.10",
     "@testing-library/jest-dom": "^4.0.0",
     "@testing-library/react": "^8.0.7",
+    "@testing-library/react-hooks": "^3.2.1",
     "babel-loader": "^8.0.5",
-    "node-sass": "^4.11.0"
+    "node-sass": "^4.13.1",
+    "prop-types": "^15.7.2"
   },
   "jest": {
     "watchPathIgnorePatterns": [
       "<rootDir>/node_modules/",
       "<rootDir>/.git/"
     ]
-  }
+  },
+  "proxy": "http://localhost:8001/api"
 }
