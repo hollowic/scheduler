@@ -13,48 +13,48 @@ const SET_DAY = "SET_DAY";
 const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
 const SET_INTERVIEW = "SET_INTERVIEW";
 
-const reducerLookUp = {
-  SET_DAY: (state, action) => ({ ...state, day: action.value }),
-  SET_APPLICATION_DATA: (state, action) => {
-    return {
-      ...state,
-      days: action.value.days,
-      appointments: action.value.appointments,
-      interviewers: action.value.interviewers
-    };
-  },
-  SET_INTERVIEW: (state, action) => {
-    const newState = {
-      ...state,
-      appointments: {
-        ...state.appointments,
-        [action.id]: {
-          ...state.appointments[action.id],
-          interview: action.interview
-        }
-      }
-    };
+// const reducerLookUp = {
+//   SET_DAY: (state, action) => ({ ...state, day: action.value }),
+//   SET_APPLICATION_DATA: (state, action) => {
+//     return {
+//       ...state,
+//       days: action.value.days,
+//       appointments: action.value.appointments,
+//       interviewers: action.value.interviewers
+//     };
+//   },
+//   SET_INTERVIEW: (state, action) => {
+//     const newState = {
+//       ...state,
+//       appointments: {
+//         ...state.appointments,
+//         [action.id]: {
+//           ...state.appointments[action.id],
+//           interview: action.interview
+//         }
+//       }
+//     };
 
-    const [updatedDay] = newState.days.filter(el => {
-      return el.appointments.includes(action.id);
-    });
+//     const [updatedDay] = newState.days.filter(el => {
+//       return el.appointments.includes(action.id);
+//     });
 
-    const spotsTaken = getAppointmentsForDay(newState, updatedDay.name).filter(
-      el => el.interview
-    ).length;
+//     const spotsTaken = getAppointmentsForDay(newState, updatedDay.name).filter(
+//       el => el.interview
+//     ).length;
 
-    return {
-      ...newState,
-      days: newState.days.map(el => {
-        if (el.name === updatedDay.name) {
-          el.spots = el.appointments.length - spotsTaken;
-        }
-        return el;
-      })
-    };
-  }
-};
-//reducer
+//     return {
+//       ...newState,
+//       days: newState.days.map(el => {
+//         if (el.name === updatedDay.name) {
+//           el.spots = el.appointments.length - spotsTaken;
+//         }
+//         return el;
+//       })
+//     };
+//   }
+// };
+// function reducer(state)
 
 function reducer(state, action) {
   switch (action.type) {
