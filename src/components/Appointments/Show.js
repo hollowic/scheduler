@@ -1,7 +1,6 @@
 import React from "react";
 
 export default function Show({ student, interviewer, onEdit, onDelete }) {
-  console.log(interviewer);
   return (
     <main className="appointment__card appointment__card--show">
       <section className="appointment__card-left">

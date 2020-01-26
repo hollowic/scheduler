@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import useVisualMode from "hooks/useVisualMode";
 import Header from "components/Appointments/Header";
 import Empty from "components/Appointments/Empty";
 import Show from "components/Appointments/Show";
@@ -7,7 +8,6 @@ import Status from "components/Appointments/Status";
 import Confirm from "components/Appointments/Confirm";
 import Error from "components/Appointments/Error";
 import "components/Appointments/styles.scss";
-import useVisualMode from "hooks/useVisualMode";
 
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";

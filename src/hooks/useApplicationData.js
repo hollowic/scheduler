@@ -9,6 +9,8 @@ const initialValue = {
   interviewers: {}
 };
 
+const route = process.env.REACT_APP_API_URL;
+
 const SET_DAY = "SET_DAY";
 const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
 const SET_INTERVIEW = "SET_INTERVIEW";
@@ -138,9 +140,9 @@ export default function useApplicationData() {
           { data: appointments },
           { data: interviewers }
         ] = await Promise.all([
-          axios.get("/days"),
-          axios.get("/appointments"),
-          axios.get("/interviewers")
+          axios.get(`${route}/days`),
+          axios.get(`${route}/appointments`),
+          axios.get(`${route}/interviewers`)
         ]);
         dispatch({
           type: SET_APPLICATION_DATA,
