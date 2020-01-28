@@ -1,6 +1,11 @@
 import { useEffect, useReducer } from "react";
+import {
+  SET_DAY,
+  SET_APPLICATION_DATA,
+  SET_INTERVIEW,
+  reducer
+} from "reducers/application";
 import axios from "axios";
-import { getAppointmentsForDay } from "helpers/selectors";
 
 const initialValue = {
   day: "Monday",
@@ -8,59 +13,6 @@ const initialValue = {
   appointments: {},
   interviewers: {}
 };
-
-const SET_DAY = "SET_DAY";
-const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
-const SET_INTERVIEW = "SET_INTERVIEW";
-
-function reducer(state, action) {
-  switch (action.type) {
-    case SET_DAY:
-      return { ...state, day: action.value };
-    case SET_APPLICATION_DATA:
-      return {
-        ...state,
-        days: action.value.days,
-        appointments: action.value.appointments,
-        interviewers: action.value.interviewers
-      };
-    case SET_INTERVIEW: {
-      const newState = {
-        ...state,
-        appointments: {
-          ...state.appointments,
-          [action.id]: {
-            ...state.appointments[action.id],
-            interview: action.interview
-          }
-        }
-      };
-
-      const [updatedDay] = newState.days.filter(el => {
-        return el.appointments.includes(action.id);
-      });
-
-      const spotsTaken = getAppointmentsForDay(
-        newState,
-        updatedDay.name
-      ).filter(el => el.interview).length;
-
-      return {
-        ...newState,
-        days: newState.days.map(el => {
-          if (el.name === updatedDay.name) {
-            el.spots = el.appointments.length - spotsTaken;
-          }
-          return el;
-        })
-      };
-    }
-    default:
-      throw new Error(
-        `Tried to reduce with unsupported action type: ${action.type}`
-      );
-  }
-}
 
 export default function useApplicationData() {
   const setDay = day => dispatch({ type: SET_DAY, value: day });
@@ -115,21 +67,13 @@ export default function useApplicationData() {
   }, []);
 
   async function bookInterview(id, interview) {
-    try {
-      await axios.put(`/appointments/${id}`, { interview });
-      dispatch({ type: SET_INTERVIEW, id, interview });
-    } catch (err) {
-      console.log(err);
-    }
+    await axios.put(`/appointments/${id}`, { interview });
+    dispatch({ type: SET_INTERVIEW, id, interview });
   }
 
   async function cancelInterview(id) {
-    try {
-      await axios.delete(`/appointments/${id}`);
-      dispatch({ type: SET_INTERVIEW, id, interview: null });
-    } catch (err) {
-      console.log(err);
-    }
+    await axios.delete(`/appointments/${id}`);
+    dispatch({ type: SET_INTERVIEW, id, interview: null });
   }
 
   return { state, setDay, bookInterview, cancelInterview };

@@ -39,7 +39,6 @@ export default function Appointment({
       await bookInterview(id, interview);
       transition(SHOW);
     } catch (err) {
-      console.log(err);
       transition(ERROR_SAVE, true);
     }
   }
@@ -50,7 +49,6 @@ export default function Appointment({
       await cancelInterview(id);
       transition(EMPTY);
     } catch (err) {
-      console.log(err);
       transition(ERROR_DELETE, true);
     }
   }
@@ -65,7 +63,7 @@ export default function Appointment({
   }, [interview, transition, mode]);
 
   return (
-    <article className="appointment">
+    <article className="appointment" data-testid="appointment">
       <Header time={time}></Header>
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SHOW && (
