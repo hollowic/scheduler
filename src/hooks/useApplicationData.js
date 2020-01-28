@@ -22,15 +22,13 @@ export default function useApplicationData() {
   useEffect(() => {
     let WS = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
 
-    WS.onopen = e => {
-      console.log("Connection Established");
-      WS.onmessage = event => {
-        const incomingData = JSON.parse(event.data);
-        if (incomingData.type === SET_INTERVIEW) {
+    WS.onopen = () => {
+      WS.onmessage = e => {
+        if (JSON.parse(e.data).type === SET_INTERVIEW) {
           dispatch({
             type: SET_INTERVIEW,
-            id: incomingData.id,
-            interview: incomingData.interview
+            id: JSON.parse(e.data).id,
+            interview: JSON.parse(e.data).interview
           });
         }
       };
