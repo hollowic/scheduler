@@ -1,6 +1,6 @@
 import { useEffect, useReducer } from "react";
 import {
-  // SET_DAY,
+  SET_DAY,
   SET_APPLICATION_DATA,
   SET_INTERVIEW,
   reducer
