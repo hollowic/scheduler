@@ -19,33 +19,33 @@ jobs:
           key: v1-dependencies-{{ checksum "package.json" }}
       - run: npm test
 
-    deploy:
-      machine:
-        enabled: true
+  deploy:
+    machine:
+      enabled: true
 
-      working_directory: ~/client
+    working_directory: ~/client
 
-      steps:
-        - add_ssh_keys:
-            fingerprints:
-              - "e8:86:b5:d5:67:51:90:86:94:a9:b1:20:e0:f7:4d:6e"
-        - checkout
-        - run:
-            name: Push Master to Production
-            command: |
-              git push https://github.com/hollowic/scheduler.git master:production
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "e8:86:b5:d5:67:51:90:86:94:a9:b1:20:e0:f7:4d:6e"
+      - checkout
+      - run:
+          name: Push Master to Production
+          command: |
+            git push https://github.com/hollowic/scheduler.git master:production
 
-    workflows:
-      version: 2
-      test_and_deploy:
-        jobs:
-          - build:
-              filters:
-                branches:
-                  ignore: production
-          - deploy:
-              filters:
-                branches:
-                  ignore: production
-              requires:
-                - build
+workflows:
+  version: 2
+  test_and_deploy:
+    jobs:
+      - build:
+          filters:
+            branches:
+              ignore: production
+      - deploy:
+          filters:
+            branches:
+              ignore: production
+          requires:
+            - build
